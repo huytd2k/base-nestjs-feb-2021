@@ -30,3 +30,14 @@ $ yarn test:e2e
 $ yarn test:cov
 ```
 
+## TODO:
+- [] Config service
+- [] Swagger Docs
+- [] Dockerfile for databases
+- [] Logging
+- [] Database migration
+- [] Utils
+- [] Auth
+- [] Exception Filter
+- [] File Upload
+
