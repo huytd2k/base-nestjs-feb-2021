@@ -32,6 +32,7 @@ $ yarn test:cov
 
 ## TODO:
 - [ ] Config service
+- [ ] Lint, format
 - [ ] Swagger Docs
 - [ ] Dockerfile for databases
 - [ ] Logging
@@ -40,4 +41,5 @@ $ yarn test:cov
 - [ ] Auth
 - [ ] Exception Filter
 - [ ] File Upload
+
 
