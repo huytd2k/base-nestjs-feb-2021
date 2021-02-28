@@ -7,7 +7,7 @@ import { UserEntity } from './user.entity';
 
 @Injectable()
 export class UserService {
-  logger = new Logger(UserService.name);
+  private _logger = new Logger(UserService.name);
 
   constructor(
     @InjectRepository(UserEntity)
@@ -17,11 +17,28 @@ export class UserService {
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
     const newUser = new UserEntity(createUserDto);
     try {
+      newUser.hashPassword();
       const savedUser = await this.userReposity.save(newUser);
+
       return savedUser.toDto();
     } catch (error) {
-      this.logger.error(error.message);
+      this._logger.error(error.message);
       throw error;
     }
+  }
+
+  async findById(id: string): Promise<UserDto> {
+    const foundUser = await this.userReposity.findOne(id);
+    return foundUser && foundUser.toDto();
+  }
+
+  async findByUsername(username: string): Promise<UserDto> {
+    const foundUser = await this.userReposity.findOne({ username });
+    return foundUser && foundUser.toDto();
+  }
+
+  async findByEmail(email: string): Promise<UserDto> {
+    const foundUser = await this.userReposity.findOne({ email });
+    return foundUser && foundUser.toDto();
   }
 }

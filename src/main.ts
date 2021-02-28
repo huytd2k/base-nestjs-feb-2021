@@ -1,8 +1,7 @@
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { AppConfigService } from './config/app-config/app-config.service';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,8 +10,6 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.enableCors();
   app.enableShutdownHooks();
-  app.useGlobalPipes(new ValidationPipe());
-
 
   const options = new DocumentBuilder()
     .setTitle('Base')
