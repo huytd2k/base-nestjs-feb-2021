@@ -10,6 +10,7 @@ import { DbConfigModule } from './config/db-config/db-config.module';
 import { dbConfigSchema } from './config/db-config/db-config.schema';
 import { DbConfigService } from './config/db-config/db-config.service';
 import { UserModule } from './models/user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { UserModule } from './models/user/user.module';
       inject: [DbConfigService],
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

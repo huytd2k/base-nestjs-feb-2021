@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CryptoHelper } from 'src/common/helper/crypto.helper';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from './dto/create/create-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './user.entity';
 
@@ -25,6 +26,17 @@ export class UserService {
       this._logger.error(error.message);
       throw error;
     }
+  }
+
+  async validateUser(username: string, password: string): Promise<boolean> {
+    const user = await this.userReposity.findOne({
+      username,
+    });
+    if (!user) return false;
+
+    const { password: hashedPassword } = user;
+
+    return CryptoHelper.compareHash(password, hashedPassword);
   }
 
   async findById(id: string): Promise<UserDto> {

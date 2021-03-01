@@ -1,7 +1,7 @@
 import { Injectable, PipeTransform } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { ValidateHelper } from 'src/common/helper/validate.helper';
-import { CreateUserDto } from '../dto/create-user.dto';
+import { CreateUserDto } from '../dto/create/create-user.dto';
 import { ValidateErrorMessageEnum } from '../enums/validate-error-message.enum';
 import { InvalidCreateUserException } from '../exceptions/invalid-create-user.exception';
 import { UserService } from '../user.service';

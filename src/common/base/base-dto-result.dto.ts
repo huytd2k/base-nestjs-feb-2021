@@ -1,6 +1,3 @@
-import { ValidationFieldError } from '../types/validation-errors';
-
-export abstract class BaseDtoResult<T> {
+export abstract class BaseDtoResult {
   sucess: boolean;
-  validateErrors?: ValidationFieldError<T>[] | any;
 }

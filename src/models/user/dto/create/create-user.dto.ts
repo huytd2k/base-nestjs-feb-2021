@@ -1,5 +1,5 @@
 import { IsEmail, IsString, Matches } from 'class-validator';
-import { ValidateUserRegex } from '../consts/validate-regexs';
+import { ValidateUserRegex } from '../../consts/validate-regexs';
 
 export class CreateUserDto {
   @IsString()
