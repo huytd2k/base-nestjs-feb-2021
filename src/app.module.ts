@@ -11,16 +11,23 @@ import { dbConfigSchema } from './config/db-config/db-config.schema';
 import { DbConfigService } from './config/db-config/db-config.service';
 import { UserModule } from './models/user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { JwtConfigModule } from './config/jwt-config/jwt-config.module';
+import { jwtConfigSchema } from './config/jwt-config/jwt-config.schema';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env', '.env.development'],
       isGlobal: true,
-      validationSchema: Joi.object({ ...appConfigSchema, ...dbConfigSchema }),
+      validationSchema: Joi.object({
+        ...appConfigSchema,
+        ...dbConfigSchema,
+        ...jwtConfigSchema,
+      }),
     }),
     AppConfigService,
     DbConfigModule,
+    JwtConfigModule,
     TypeOrmModule.forRootAsync({
       imports: [DbConfigModule],
       useFactory: (dbConfigService: DbConfigService) => ({

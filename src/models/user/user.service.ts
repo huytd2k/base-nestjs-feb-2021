@@ -28,15 +28,17 @@ export class UserService {
     }
   }
 
-  async validateUser(username: string, password: string): Promise<boolean> {
+  async validateUser(
+    username: string,
+    password: string,
+  ): Promise<UserDto | null> {
     const user = await this.userReposity.findOne({
       username,
     });
-    if (!user) return false;
 
-    const { password: hashedPassword } = user;
-
-    return CryptoHelper.compareHash(password, hashedPassword);
+    if (user && CryptoHelper.compareHash(password, user.password))
+      return user.toDto();
+    return null;
   }
 
   async findById(id: string): Promise<UserDto> {
