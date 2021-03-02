@@ -31,14 +31,14 @@ $ yarn test:cov
 ```
 
 ## TODO:
-- [ ] Config service
+- [x] Config service
 - [ ] Lint, format
-- [ ] Swagger Docs
-- [ ] Dockerfile for databases
+- [x] Swagger Docs
+- [x] Dockerfile for databases
 - [ ] Logging
-- [ ] Database migration
+- [x] Database migration
 - [ ] Utils
-- [ ] Auth
+- [x] Auth
 - [ ] Exception Filter
 - [ ] File Upload
 

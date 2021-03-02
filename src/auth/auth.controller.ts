@@ -5,6 +5,7 @@ import {
   Response as Res,
   UseGuards,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { User } from 'src/common/decorators/user.decorator';
@@ -15,9 +16,6 @@ import { LocalAuthGuard } from './local-auth.guard';
 import { LoginSuccessResultDto } from './login/dtos/login-success-result.dto';
 import { LoginDto } from './login/dtos/login.dto';
 import { RefreshTokenGuard } from './refresh-token.guard';
-import { JwtService } from '@nestjs/jwt';
-import { AuthGuard } from '@nestjs/passport';
-import { RefreshTokenStrategy } from './refresh-token.stragedy';
 import { RefreshTokenDto } from './refresh-token/refresh-token.dto';
 
 @ApiTags('Authorization')
