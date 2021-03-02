@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { AppConfigService } from './config/app-config/app-config.service';
+import * as cookieParser from 'cookie-parser';
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +12,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.enableCors();
   app.enableShutdownHooks();
+  app.use(cookieParser('123123'));
 
   const options = new DocumentBuilder()
     .setTitle('Base')

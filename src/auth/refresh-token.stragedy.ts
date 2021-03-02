@@ -1,0 +1,33 @@
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { Request } from 'express';
+import { Strategy } from 'passport-jwt';
+import { JwtConfigService } from 'src/config/jwt-config/jwt-config.service';
+import { JwtService } from '@nestjs/jwt';
+import { TokenHelper } from 'src/common/helper/token.helper';
+
+@Injectable()
+export class RefreshTokenStrategy extends PassportStrategy(
+  Strategy,
+  'refresh_token',
+) {
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly jwtConfigService: JwtConfigService,
+  ) {
+    super({
+      jwtFromRequest: TokenHelper.extractRefreshTokenFromRequest,
+      ignoreExpiration: false,
+      secretOrKey: jwtConfigService.secretKey,
+    });
+  }
+
+  async validate(payload: any) {
+    const old_access_token = payload.access_token;
+    const decodedAccessToken = this.jwtService.decode(old_access_token);
+    return {
+      userId: decodedAccessToken['id'],
+      username: decodedAccessToken['username'],
+    };
+  }
+}
