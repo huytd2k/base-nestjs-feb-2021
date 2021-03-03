@@ -1,6 +1,5 @@
 import { Exclude, Expose } from 'class-transformer';
 import { BaseEntity } from 'src/common/base/base.entity';
-import { CryptoHelper } from 'src/common/helper/crypto.helper';
 import { Column, Entity } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 
@@ -19,8 +18,4 @@ export class UserEntity extends BaseEntity<UserEntity, UserDto> {
   @Column({ name: 'email', type: 'varchar', length: 255 })
   @Expose()
   email: string;
-
-  hashPassword() {
-    this.password = CryptoHelper.genHash(this.password);
-  }
 }

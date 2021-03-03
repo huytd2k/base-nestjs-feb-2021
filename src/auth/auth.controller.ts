@@ -17,6 +17,7 @@ import { LoginSuccessResultDto } from './login/dtos/login-success-result.dto';
 import { LoginDto } from './login/dtos/login.dto';
 import { RefreshTokenGuard } from './refresh-token.guard';
 import { RefreshTokenDto } from './refresh-token/refresh-token.dto';
+import { TokenPayload } from './type/token-payload';
 
 @ApiTags('Authorization')
 @Controller('auth')
@@ -43,14 +44,16 @@ export class AuthController {
   @Get('me')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  async me(@User() user) {
-    return user;
+  @ApiResponse({ type: UserDto })
+  async me(@User() user: TokenPayload) {
+    return await this._authService.getUserInfoByUsername(user.username);
   }
 
   @Post('refresh_token')
   @UseGuards(RefreshTokenGuard)
   @ApiBody({ type: RefreshTokenDto })
-  async refreshToken(@User() user) {
-    return this._authService.issueNewToken(user);
+  async refreshToken(@User() user: TokenPayload) {
+    const { username, id } = user;
+    return await this._authService.issueNewToken(username, id);
   }
 }

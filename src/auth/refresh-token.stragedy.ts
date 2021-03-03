@@ -11,21 +11,22 @@ export class RefreshTokenStrategy extends PassportStrategy(
   'refresh_token',
 ) {
   constructor(
-    private readonly jwtService: JwtService,
-    private readonly jwtConfigService: JwtConfigService,
+    private readonly _jwtService: JwtService,
+    private readonly _jwtConfigService: JwtConfigService,
+    private readonly _tokenHelper: TokenHelper,
   ) {
     super({
-      jwtFromRequest: TokenHelper.extractRefreshTokenFromRequest,
+      jwtFromRequest: _tokenHelper.extractRefreshTokenFromRequest,
       ignoreExpiration: false,
-      secretOrKey: jwtConfigService.secretKey,
+      secretOrKey: _jwtConfigService.secretKey,
     });
   }
 
   async validate(payload: any) {
     const old_access_token = payload.access_token;
-    const decodedAccessToken = this.jwtService.decode(old_access_token);
+    const decodedAccessToken = this._jwtService.decode(old_access_token);
     return {
-      userId: decodedAccessToken['id'],
+      id: decodedAccessToken['id'],
       username: decodedAccessToken['username'],
     };
   }

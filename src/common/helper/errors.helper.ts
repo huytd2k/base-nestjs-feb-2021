@@ -1,11 +1,13 @@
-import { ValidationError } from 'class-validator';
+import { Injectable } from '@nestjs/common';
+import { ValidationError as ClassValidatorError } from 'class-validator';
 import { ValidationErrors } from '../types/validation-errors';
 
+@Injectable()
 export class ErrorHelper {
   /**
    * Mapping errors from `class-validator` type to custom type
    */
-  static mapValidateErrors<T>(errs: ValidationError[]): ValidationErrors<T> {
+  mapValidateErrors<T>(errs: ClassValidatorError[]): ValidationErrors<T> {
     return {
       validateErrors: errs.map((err) => ({
         field: err.property,

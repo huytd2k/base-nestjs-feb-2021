@@ -13,6 +13,7 @@ import { UserModule } from './models/user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtConfigModule } from './config/jwt-config/jwt-config.module';
 import { jwtConfigSchema } from './config/jwt-config/jwt-config.schema';
+import { HelperModule } from './common/helper/helper.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { jwtConfigSchema } from './config/jwt-config/jwt-config.schema';
     }),
     UserModule,
     AuthModule,
+    HelperModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -8,13 +8,16 @@ import { UserService } from '../user.service';
 
 @Injectable()
 export class CreateUserValidatePipe implements PipeTransform {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly _userService: UserService,
+    private readonly _validateHelper: ValidateHelper,
+  ) {}
   private async _isUsernameExisted(username: string) {
-    const user = await this.userService.findByUsername(username);
+    const user = await this._userService.findByUsername(username);
     return !!user;
   }
   private async _isEmailExisted(email: string) {
-    const user = await this.userService.findByEmail(email);
+    const user = await this._userService.findByEmail(email);
     return !!user;
   }
   /**
@@ -22,7 +25,7 @@ export class CreateUserValidatePipe implements PipeTransform {
    * @param createUserDto : must be transformed to class instance
    */
   private async _validate(createUserDto: CreateUserDto) {
-    const { validateErrors } = ValidateHelper.validate<CreateUserDto>(
+    const { validateErrors } = this._validateHelper.validate<CreateUserDto>(
       createUserDto,
     );
 

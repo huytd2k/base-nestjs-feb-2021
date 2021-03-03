@@ -8,23 +8,26 @@ import { LoginSuccessResultDto } from './login/dtos/login-success-result.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UserService,
-    private readonly jwtService: JwtService,
-    private readonly jwtConfigService: JwtConfigService,
+    private readonly _userService: UserService,
+    private readonly _jwtService: JwtService,
+    private readonly _jwtConfigService: JwtConfigService,
   ) {}
+  async getUserInfoByUsername(username: string) {
+    return await this._userService.findByUsername(username);
+  }
   async validateUser(username: string, password: string) {
-    return await this.userService.validateUser(username, password);
+    return await this._userService.validateUser(username, password);
   }
   async login(user: UserDto): Promise<LoginSuccessResultDto> {
     const { username, id } = user;
     const payload = { username, id };
-    const accessToken = this.jwtService.sign(payload);
-    const refreshToken = this.jwtService.sign(
+    const accessToken = this._jwtService.sign(payload);
+    const refreshToken = this._jwtService.sign(
       { access_token: accessToken },
-      { expiresIn: '7d' },
+      { expiresIn: '7d' }, // TODO: Add config for refresh_token
     );
-    const decodedAccessToken = this.jwtService.decode(accessToken);
-    const decodedRefreshToken = this.jwtService.decode(refreshToken);
+    const decodedAccessToken = this._jwtService.decode(accessToken);
+    const decodedRefreshToken = this._jwtService.decode(refreshToken);
     return {
       access_token: accessToken,
       refresh_token: refreshToken,
@@ -33,10 +36,9 @@ export class AuthService {
       refresh_token_exp: decodedRefreshToken['exp'],
     };
   }
-  async issueNewToken(user: UserDto) {
-    const { username, id } = user;
+  async issueNewToken(username: string, id: string) {
     const payload = { username, id };
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this._jwtService.sign(payload);
 
     return {
       access_token: accessToken,
