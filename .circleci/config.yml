@@ -13,7 +13,7 @@ jobs:
       - checkout
       - run:
           name: install yarn
-          command: 'sudo install -g yarn'
+          command: 'sudo npm install -g yarn'
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn-lock.json" }}
       - run:
