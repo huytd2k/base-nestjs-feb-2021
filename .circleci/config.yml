@@ -1,0 +1,28 @@
+version: 2.1
+orbs:
+  node: circleci/node@3.0.0
+workflows:
+  node-tests:
+    jobs:
+      - build
+jobs:
+  build: 
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - run:
+          name: install yarn
+          command: 'sudo install -g yarn'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn-lock.json" }}
+      - run:
+          name: install deps
+          command: 'yarn'
+      - save_cache:
+          paths:
+            - "./node_modules"
+          key: dependency-cahe-{{ checksum "yarn-lock.json"}}
+      - run:
+          name: build
+          command: 'yarn build'
