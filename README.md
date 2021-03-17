@@ -1,3 +1,5 @@
+[![<CIRCLECI>](https://circleci.com/gh/huytd2k/base-nestjs-feb-2021.svg?style=svg)](https://circleci.com/gh/huytd2k/base-nestjs-feb-2021)
+
 ## Installation
 
 ```bash
