@@ -1,19 +1,22 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer } from '@nestjs/common/interfaces';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { HelperModule } from './common/helper/helper.module';
+import { AppConfigModule } from './config/app-config/app-config.module';
 import { appConfigSchema } from './config/app-config/app-config.schema';
-import { AppConfigService } from './config/app-config/app-config.service';
 import { DbConfigModule } from './config/db-config/db-config.module';
 import { dbConfigSchema } from './config/db-config/db-config.schema';
 import { DbConfigService } from './config/db-config/db-config.service';
-import { UserModule } from './models/user/user.module';
-import { AuthModule } from './auth/auth.module';
 import { JwtConfigModule } from './config/jwt-config/jwt-config.module';
 import { jwtConfigSchema } from './config/jwt-config/jwt-config.schema';
-import { HelperModule } from './common/helper/helper.module';
+import { LoggerMiddleware } from './middleware/http-log.middleware';
+import { UserModule } from './models/user/user.module';
 
 @Module({
   imports: [
@@ -26,9 +29,9 @@ import { HelperModule } from './common/helper/helper.module';
         ...jwtConfigSchema,
       }),
     }),
-    AppConfigService,
     DbConfigModule,
     JwtConfigModule,
+    AppConfigModule,
     TypeOrmModule.forRootAsync({
       imports: [DbConfigModule],
       useFactory: (dbConfigService: DbConfigService) => ({
@@ -51,4 +54,8 @@ import { HelperModule } from './common/helper/helper.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

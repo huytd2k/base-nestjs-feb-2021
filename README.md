@@ -4,6 +4,8 @@
 $ yarn 
 ```
 
+## Running docker database based on `.env` file
+$ docker-compose -f docker-compose.dev.yaml up -d
 ## Running the app
 
 ```bash
@@ -35,7 +37,7 @@ $ yarn test:cov
 - [ ] Lint, format
 - [x] Swagger Docs
 - [x] Dockerfile for databases
-- [ ] Logging
+- [x] Logging
 - [x] Database migration
 - [ ] Utils
 - [x] Auth
