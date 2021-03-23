@@ -8,8 +8,8 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { User } from 'src/common/decorators/user.decorator';
-import { UserDto } from 'src/models/user/dto/user.dto';
+import { User } from '../common/decorators/user.decorator';
+import { UserDto } from '../models/user/dto/user.dto';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt.guard';
 import { LocalAuthGuard } from './local-auth.guard';

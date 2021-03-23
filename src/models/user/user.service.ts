@@ -47,16 +47,22 @@ export class UserService {
 
   async findById(id: string): Promise<UserDto> {
     const foundUser = await this._userReposity.findOne(id);
-    return foundUser && foundUser.toDto();
+    const userDto = foundUser && foundUser.toDto();
+
+    return userDto;
   }
 
   async findByUsername(username: string): Promise<UserDto> {
     const foundUser = await this._userReposity.findOne({ username });
-    return foundUser && foundUser.toDto();
+    const userDto = foundUser && foundUser.toDto();
+
+    return userDto;
   }
 
   async findByEmail(email: string): Promise<UserDto> {
     const foundUser = await this._userReposity.findOne({ email });
-    return foundUser && foundUser.toDto();
+    const userDto = foundUser && foundUser.toDto();
+
+    return userDto;
   }
 }
