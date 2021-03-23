@@ -5,7 +5,9 @@ $ yarn
 ```
 
 ## Running docker database based on `.env` file
+``` bash
 $ docker-compose -f docker-compose.dev.yaml up -d
+```
 ## Running the app
 
 ```bash
